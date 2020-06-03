@@ -17,9 +17,7 @@ build:
   number: 1
   script:
     - pushd {{ pkg_src }}
-    - go get -d -v ./...
-    - go build -v -o $GOBIN/{{ name }}      -ldflags "-X main.revision=conda-forge" .  # [unix]
-    - go build -v -o %GOBIN%\{{ name }}.exe -ldflags "-X main.revision=conda-forge" .  # [win]
+    - go install -v -ldflags "-X main.revision=conda-forge" .
     - bash -c "mkdir -p ${PREFIX}/share/fzf/shell; cp -v shell/* ${PREFIX}/share/fzf/shell/"
 
 requirements:
