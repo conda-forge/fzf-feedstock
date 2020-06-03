@@ -14,12 +14,10 @@ source:
     sha256: 47adf138f17c45d390af81958bdff6f92157d41e2c4cb13773df078b905cdaf4
 
 build:
-  number: 0
+  number: 1
   script:
     - pushd {{ pkg_src }}
-    - go get -d -v ./...
-    - go build -v -o $GOBIN/{{ name }}      -ldflags "-X main.revision=conda-forge" .  # [unix]
-    - go build -v -o %GOBIN%\{{ name }}.exe -ldflags "-X main.revision=conda-forge" .  # [win]
+    - go install -v -ldflags "-X main.revision=conda-forge" .
     - bash -c "mkdir -p ${PREFIX}/share/fzf/shell; cp -v shell/* ${PREFIX}/share/fzf/shell/"
 
 requirements:
