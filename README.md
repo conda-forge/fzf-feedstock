@@ -5,11 +5,9 @@ Home: https://github.com/junegunn/fzf
 
 Package license: MIT
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/fzf-feedstock/blob/master/LICENSE.txt)
 
 Summary: A command-line fuzzy finder
-
-
 
 Current build status
 ====================
