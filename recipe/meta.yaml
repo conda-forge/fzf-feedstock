@@ -14,11 +14,12 @@ source:
     sha256: 7798a9e22fc363801131456dc21026ccb0f037aed026d17df60b1178b3f24111
 
 build:
-  number: 0
+  number: 1
   script:
     - pushd {{ pkg_src }}
     - go install -v -ldflags "-X main.revision=conda-forge" .
     - bash -c "mkdir -p ${PREFIX}/share/fzf/shell; cp -v shell/* ${PREFIX}/share/fzf/shell/"
+    - bash -c "mkdir -p ${PREFIX}/share/fzf/plugin; cp -v plugin/* ${PREFIX}/share/fzf/plugin/"
 
 requirements:
   build:
