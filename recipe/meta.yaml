@@ -1,5 +1,5 @@
 {% set goname = "github.com/junegunn/fzf" %}
-{% set version = "0.27.2" %}
+{% set version = "0.27.3" %}
 
 {% set name = goname.split('/')[-1] %}
 {% set pkg_src = ('src/'+goname).replace("/",os.sep) %}
@@ -11,10 +11,10 @@ package:
 source:
   - folder: {{ pkg_src }}
     url: https://{{ goname }}/archive/{{ version }}.tar.gz
-    sha256: 7798a9e22fc363801131456dc21026ccb0f037aed026d17df60b1178b3f24111
+    sha256: a0ad8dc6dd5c7a0c87ad623c0d9164cc2861489b76cb7a8b66f51cb4f9a81254
 
 build:
-  number: 1
+  number: 0
   script:
     - pushd {{ pkg_src }}
     - go install -v -ldflags "-X main.revision=conda-forge" .
