@@ -17,13 +17,18 @@ build:
   number: 0
   script:
     - pushd {{ pkg_src }}
-    - go install -v -ldflags "-X main.revision=conda-forge" .
+    - go build -ldflags "-X main.revision=conda-forge" -v -o $PREFIX/bin/fzf  # [not win]
+    - go build -ldflags "-X main.revision=conda-forge" -v -o %LIBRARY_BIN%\fzf.exe  # [win]
     - bash -c "mkdir -p ${PREFIX}/share/fzf/shell; cp -v shell/* ${PREFIX}/share/fzf/shell/"
     - bash -c "mkdir -p ${PREFIX}/share/fzf/plugin; cp -v plugin/* ${PREFIX}/share/fzf/plugin/"
+    - go-licenses save . --save_path ../../../../library_licenses
+    # Clear out cache to avoid file not removable warnings
+    - chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)  # [unix]
 
 requirements:
   build:
     - {{ compiler('go') }}
+    - go-licenses
 
 test:
   commands:
@@ -33,7 +38,9 @@ about:
   home: https://{{ goname }}
   license: MIT
   license_family: MIT
-  license_file: {{ pkg_src }}/LICENSE
+  license_file:
+    - {{ pkg_src }}/LICENSE
+    - library_licenses/
   summary: A command-line fuzzy finder
 
 extra:
