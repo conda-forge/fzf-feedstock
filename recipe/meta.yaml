@@ -14,13 +14,14 @@ source:
     sha256: d4e8e25fad2d3f75943b403c40b61326db74b705bf629c279978fdd0ceb1f97c
 
 build:
-  number: 0
+  number: 1
   script:
     - pushd {{ pkg_src }}
     - go build -ldflags "-X main.revision=conda-forge" -v -o $PREFIX/bin/fzf  # [not win]
     - go build -ldflags "-X main.revision=conda-forge" -v -o %LIBRARY_BIN%\fzf.exe  # [win]
     - bash -c "mkdir -p ${PREFIX}/share/fzf/shell; cp -v shell/* ${PREFIX}/share/fzf/shell/"
     - bash -c "mkdir -p ${PREFIX}/share/fzf/plugin; cp -v plugin/* ${PREFIX}/share/fzf/plugin/"
+    - bash -c "mkdir -p ${PREFIX}/share/man/man1; cp -v man/man1/*.1 ${PREFIX}/share/man/man1/"
     - go-licenses save . --save_path ../../../../library_licenses
     # Clear out cache to avoid file not removable warnings
     - chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)  # [unix]
