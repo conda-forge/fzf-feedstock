@@ -14,7 +14,7 @@ source:
     sha256: da72936dd23045346769dbf233a7a1fa6b4cfe4f0e856b279821598ce8f692af
 
 build:
-  number: 0
+  number: 1
   script:
     - pushd {{ pkg_src }}
     - go build -ldflags "-X main.revision=conda-forge" -v -o $PREFIX/bin/fzf  # [not win]
