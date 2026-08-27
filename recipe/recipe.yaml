@@ -1,0 +1,55 @@
+schema_version: 1
+
+context:
+  name: fzf
+  version: 0.74.3
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/junegunn/${{ name }}/archive/v${{ version }}.tar.gz
+  sha256: 5b142217c3068647a7d8faa9c678cffada100b5f11a48609aa79c94ce04b28ef
+  target_directory: src
+
+build:
+  number: 1
+  script:
+    - cd src
+    - if: unix
+      then: go build -ldflags "-X main.revision=conda-forge" -v -o "$PREFIX/bin/fzf"
+    - if: win
+      then: go build -ldflags "-X main.revision=conda-forge" -v -o "%LIBRARY_BIN%\fzf.exe"
+    - bash -c "mkdir -p ${PREFIX}/share/fzf/shell; cp -v shell/* ${PREFIX}/share/fzf/shell/"
+    - bash -c "mkdir -p ${PREFIX}/share/fzf/plugin; cp -v plugin/* ${PREFIX}/share/fzf/plugin/"
+    - bash -c "mkdir -p ${PREFIX}/share/man/man1; cp -v man/man1/*.1 ${PREFIX}/share/man/man1/"
+    - go-licenses save . --save_path ../library_licenses
+    - if: unix
+      then: chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)
+
+requirements:
+  build:
+    - ${{ compiler('go-nocgo') }}
+    - go-licenses
+
+tests:
+  - package_contents:
+      bin:
+        - fzf
+  - script:
+      - fzf --version
+
+about:
+  homepage: https://github.com/junegunn/fzf
+  repository: https://github.com/junegunn/fzf
+  license: MIT
+  license_family: MIT
+  license_file:
+    - src/LICENSE
+    - library_licenses/
+  summary: A command-line fuzzy finder
+
+extra:
+  recipe-maintainers:
+    - dbast
