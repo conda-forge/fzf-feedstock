@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: fzf
-  version: 0.74.3
+  version: "0.74.4"
 
 package:
   name: ${{ name }}
@@ -10,11 +10,11 @@ package:
 
 source:
   url: https://github.com/junegunn/${{ name }}/archive/v${{ version }}.tar.gz
-  sha256: 5b142217c3068647a7d8faa9c678cffada100b5f11a48609aa79c94ce04b28ef
+  sha256: 1046857c337f5bd05f6fa482446b5a42a011615105743efbe4efee0970b24bb7
   target_directory: src
 
 build:
-  number: 1
+  number: 0
   script:
     - cd src
     - if: unix
